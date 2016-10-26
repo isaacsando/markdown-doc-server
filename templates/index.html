@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Documentation</title>
+</head>
+<body>
+    {% for dir,doc_files in docs.items() %}
+        <h1>{{ dir|title }}</h1>
+        {% for doc in doc_files %} 
+            <a href="{{ url_for('md_installs', doc_type=dir, md_file=doc) }}">{{ doc }}</a></br>
+        {% endfor %}
+    {% endfor %}
+</body>
+</html>

@@ -3,7 +3,7 @@ import os
 
 from flask import Flask, render_template
 
-DOCS_ROOT = 'docs'
+DOCS_ROOT = os.path.join(os.path.dirname(__file__), 'docs')
 
 app = Flask(__name__)
 

@@ -4,6 +4,8 @@ import os
 from flask import Flask, render_template
 
 DOCS_ROOT = os.path.join(os.path.dirname(__file__), 'docs')
+HOST = '0.0.0.0'
+PORT = 8888
 
 app = Flask(__name__)
 
@@ -38,4 +40,4 @@ def md_installs(doc_type, md_file):
     return _get_html_from_md(doc_type, md_file)
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=8888, debug=True)
+    app.run(host=HOST, port=PORT, debug=True)

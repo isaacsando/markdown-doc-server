@@ -3,12 +3,14 @@ import markdown
 import os
 
 from flask import Flask, render_template
+from flask_bootstrap import Bootstrap
 
 DOCS_ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'docs')
 HOST = '0.0.0.0'
 PORT = 8888
 
 app = Flask(__name__)
+Bootstrap(app)
 
 def _build_docs_list():
     docs = {d: _get_docs_by_dir(d) for d in _get_doc_dirs()}
@@ -47,7 +49,8 @@ def index():
 
 @app.route("/docs/<doc_type>/<md_file>")
 def md_installs(doc_type, md_file):
-    return _get_html_from_md(doc_type, md_file)
+    doc_html = _get_html_from_md(doc_type, md_file)
+    return render_template('base.html', doc_html=doc_html)
 
 @app.errorhandler(404)
 def page_not_found(e):

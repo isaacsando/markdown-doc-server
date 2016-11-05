@@ -1,0 +1,12 @@
+{% extends "bootstrap/base.html" %}
+{% block title %}Markdown Tryout{% endblock %}
+
+{% block navbar %}
+<div class="navbar navbar-fixed-top">
+  <!-- ... -->
+</div>
+{% endblock %}
+
+{% block content %}
+    {{ doc_html|safe }}
+{% endblock %}

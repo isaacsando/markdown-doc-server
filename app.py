@@ -4,7 +4,7 @@ import os
 
 from flask import Flask, render_template
 
-DOCS_ROOT = os.path.join(os.path.dirname(__file__), 'docs')
+DOCS_ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'docs')
 HOST = '0.0.0.0'
 PORT = 8888
 
@@ -15,7 +15,13 @@ def _build_docs_list():
     return docs
 
 def _get_doc_dirs():
-    return os.listdir(DOCS_ROOT)
+    try:
+        return os.listdir(DOCS_ROOT)
+    except FileNotFoundError as err:
+        msg = ('{0} was not found. Please ensure the DOCS_ROOT variable is a '
+               'valid path.'
+              ).format(DOCS_ROOT)
+        raise Exception(msg) from err
 
 def _get_docs_by_dir(dir_name):
     # return only .md files
@@ -24,6 +30,7 @@ def _get_docs_by_dir(dir_name):
 
 def _get_html_from_md(doc_type, md_file):
     doc_file = os.path.join(DOCS_ROOT, doc_type, md_file)
+
     with open(doc_file) as f:
         html = markdown.markdown(
             f.read(),
@@ -41,6 +48,14 @@ def index():
 @app.route("/docs/<doc_type>/<md_file>")
 def md_installs(doc_type, md_file):
     return _get_html_from_md(doc_type, md_file)
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html', e=str(e)), 404
+
+@app.errorhandler(500)
+def internal_server_error(e):
+    return render_template('500.html', e=str(e)), 500
 
 if __name__ == "__main__":
     app.run(host=HOST, port=PORT, debug=True)

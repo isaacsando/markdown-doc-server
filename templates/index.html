@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Documentation</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% block title %}Markdown Tryout{% endblock %}
+
+{% block page_content %}
     <a href="https://daringfireball.net/projects/markdown/syntax">Markdown Syntax</a>
     {% for dir,doc_files in docs.items() %}
         <h1>{{ dir|title }}</h1>
@@ -12,5 +9,4 @@
             <a href="{{ url_for('md_installs', doc_type=dir, md_file=doc) }}">{{ doc }}</a></br>
         {% endfor %}
     {% endfor %}
-</body>
-</html>
+{% endblock %}

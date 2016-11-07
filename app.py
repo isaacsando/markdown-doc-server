@@ -42,6 +42,10 @@ def _get_html_from_md(doc_type, md_file):
                 ])
         return html
 
+@app.context_processor
+def inject_md_folders():
+    return dict(docs=_build_docs_list())
+
 @app.route("/")
 def index():
     docs = _build_docs_list()
@@ -50,7 +54,7 @@ def index():
 @app.route("/docs/<doc_type>/<md_file>")
 def md_installs(doc_type, md_file):
     doc_html = _get_html_from_md(doc_type, md_file)
-    return render_template('base.html', doc_html=doc_html)
+    return render_template('base_md_files.html', doc_html=doc_html)
 
 @app.errorhandler(404)
 def page_not_found(e):

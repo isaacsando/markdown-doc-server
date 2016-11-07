@@ -7,3 +7,4 @@ venv*/
 docs
 conf/
 exclude_files.txt
+update_remote_deployment.sh

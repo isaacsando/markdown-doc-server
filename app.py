@@ -9,8 +9,12 @@ DOCS_ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'docs')
 HOST = '0.0.0.0'
 PORT = 8888
 
-app = Flask(__name__)
-Bootstrap(app)
+def _create_app():
+    app = Flask(__name__)
+    Bootstrap(app)
+    return app
+
+app = _create_app()
 
 def _build_docs_list():
     docs = {d: _get_docs_by_dir(d) for d in _get_doc_dirs()}
